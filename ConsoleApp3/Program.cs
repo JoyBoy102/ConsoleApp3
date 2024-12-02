@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using ConsoleTables;
 
 namespace ConsoleApp3
 {
@@ -21,9 +22,10 @@ namespace ConsoleApp3
     class Programm
     {
         public static List<ExtrapolAndAccurValue> Values = new List<ExtrapolAndAccurValue>();
-
+        
         static void Main(string[] args)
         {
+            var table = new ConsoleTable("n", "zN-zTochone", "zN-zExtrapol(1)", "zExtrapol(1)-zTochonoe", "deltaN", "zExtrapol(2)-zTochnoe", "deltaN(1)");
             double z_tochone = 10.5844484649508098;
             double col1, col2, col3, col4, col5, col6, col7;
 
@@ -50,10 +52,12 @@ namespace ConsoleApp3
                     col7 = 0;
                 }
 
-                Console.WriteLine($"{col1,8} {col2,12:F2} {col3,12:F2} {col4,12:E2} {col5,12:E2} {col6,12:E2} {col7, 12:E2}");
+                //Console.WriteLine($"{col1,8} {col2,12:F2} {col3,12:F2} {col4,12:E2} {col5,12:E2} {col6,12:E2} {col7, 12:E2}");
+                table.AddRow(col1, col2, col3, col4, col5, col6, col7);
+                
                 i++;
             }
-            
+            table.Write();
         }
 
         public static double get_n_PartialSum(int n, Func<int, double, double> f, double a)
