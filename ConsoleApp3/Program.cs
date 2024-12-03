@@ -27,7 +27,7 @@ namespace ConsoleApp3
         {
             var table = new ConsoleTable("n", "zN-zTochone", "zN-zExtrapol(1)", "zExtrapol(1)-zTochonoe", "deltaN", "zExtrapol(2)-zTochnoe", "deltaN(1)");
             double z_tochone = 10.5844484649508098;
-            double col1, col2, col3, col4, col5, col6, col7;
+            string col1, col2, col3, col4, col5, col6, col7;
 
             FillExtrapolAndAccurValues(2, 1.1, 0.1);
 
@@ -35,21 +35,24 @@ namespace ConsoleApp3
             foreach (var value in Values)
             {
                 double z_extrapol2 = 0;
-                col1 = value.n;
-                col2 = value.AccurValue - z_tochone;
-                col3 = value.AccurValue - value.ExtrapolValue; //Оценка погрешности
-                col4 = value.ExtrapolValue - z_tochone;
-                col5 = col4 / col2;
+                col1 = $"{value.n, 8}";
+                col2 = $"{value.AccurValue - z_tochone, 12:F2}";
+                var valueCol2 = value.AccurValue - z_tochone;
+                col3 = $"{value.AccurValue - value.ExtrapolValue, 12:F2}"; //Оценка погрешности
+                col4 = $"{value.ExtrapolValue - z_tochone,12:E2}";
+                var valueCol4 = value.ExtrapolValue - z_tochone;
+                col5 = $"{valueCol4 / valueCol2, 12:E2}";
                 if (i > 0 && value.n >= 4)
                 {
                     z_extrapol2 = RichardsonMethod(value.ExtrapolValue, Values[i - 1].ExtrapolValue, 2, 1.1);
-                    col6 = z_extrapol2 - z_tochone;
-                    col7 = col6 / col4;
+                    col6 = $"{z_extrapol2 - z_tochone,12:E2}";
+                    var valueCol6 = z_extrapol2 - z_tochone;
+                    col7 = $"{valueCol6 / valueCol4,12:E2}";
                 }
                 else
                 {
-                    col6 = 0;
-                    col7 = 0;
+                    col6 = "-";
+                    col7 = "-";
                 }
 
                 //Console.WriteLine($"{col1,8} {col2,12:F2} {col3,12:F2} {col4,12:E2} {col5,12:E2} {col6,12:E2} {col7, 12:E2}");
